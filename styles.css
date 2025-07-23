@@ -39,12 +39,12 @@ hr {
 }
 
 .x8 {
-    background-color: #6b705c;
+    background-color: #9db458;
     color: #f8f9fa;
 }
 
 .x16 {
-    background-color: #cb997e;
+    background-color: #da8b60;
     color: #f8f9fa;
 }
 
@@ -59,17 +59,17 @@ hr {
 }
 
 .x128 {
-    background-color: #355070;
-    color: #f8f9fa;
-}
-
-.x256 {
     background-color: #588157;
     color: #f8f9fa;
 }
 
+.x256 {
+    background-color: #355070;
+    color: #f8f9fa;
+}
+
 .x512 {
-    background-color: #7f5539;
+    background-color: #8f5f3f;
     color: #f8f9fa;
 }
 
