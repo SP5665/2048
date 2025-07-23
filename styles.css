@@ -10,8 +10,8 @@ hr {
 #board {
     width: 400px;
     height: 400px;
-    background-color: #cdc1b5;
-    border: 6px solid #bbada0;
+    background-color: #595955;
+    border: 6px solid #403f3e;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -20,7 +20,7 @@ hr {
 .tile {
     width: 90px;
     height: 90px;
-    border: 5px solid #bbada0;
+    border: 5px solid #403f3e;
     font-size: 40px;
     font-weight: bold;
     display: flex;
@@ -29,66 +29,66 @@ hr {
 }
 
 .x2 {
-    background-color: #eee4da;
-    color: #727371;
+    background-color: #a26769;
+    color: #f8f9fa;
 }
 
 .x4 {
-    background-color: #ece0ca;
-    color: #727371;
+    background-color: #d4a373;
+    color: #f8f9fa;
 }
 
 .x8 {
-    background-color: #f4b17a;
-    color: white;
+    background-color: #6b705c;
+    color: #f8f9fa;
 }
 
 .x16 {
-    background-color: #f59575;
-    color: white;
+    background-color: #cb997e;
+    color: #f8f9fa;
 }
 
 .x32 {
-    background-color: #f57c5f;
-    color: white;
+    background-color: #b5838d;
+    color: #f8f9fa;
 }
 
 .x64 {
-    background-color: #f57c5f;
+    background-color: #6d597a;
     color: white;
 }
 
 .x128 {
-    background-color: #edce71;
-    color: white;
+    background-color: #355070;
+    color: #f8f9fa;
 }
 
 .x256 {
-    background-color: #edcc63;
-    color: white;
+    background-color: #588157;
+    color: #f8f9fa;
 }
 
 .x512 {
-    background-color: #f59575;
-    color: white;
+    background-color: #7f5539;
+    color: #f8f9fa;
 }
 
 .x1024 {
-    background-color: #eec744;
-    color: white;
+    background-color: #8d99ae;
+    color: #f8f9fa;
 }
 
 .x2048 {
-    background-color: #ecc230;
-    color: white;
+    background-color: #c4b7a6;
+    color: #2f2f2f;
 }
 
 .x4096 {
-    background-color: #fe3d3d;
-    color: white;
+    background-color: #5e503f;
+    color: #f8f9fa;
 }
 
 .x8192 {
-    background-color: #ff2020;
-    color: white;
+    background-color: #2b2d42;
+    color: #f8f9fa;
 }
