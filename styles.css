@@ -76,19 +76,23 @@ hr {
 .x1024 {
     background-color: #8d99ae;
     color: #f8f9fa;
+    font-size: 38px;
 }
 
 .x2048 {
     background-color: #c4b7a6;
     color: #2f2f2f;
+    font-size: 38px;
 }
 
 .x4096 {
     background-color: #5e503f;
     color: #f8f9fa;
+    font-size: 37px;
 }
 
 .x8192 {
     background-color: #2b2d42;
     color: #f8f9fa;
+    font-size: 37px;
 }
