@@ -1,2 +1,2 @@
 # 2048
-2048 sliding tile puzzle game
+2048 Sliding Tile Puzzle Game
