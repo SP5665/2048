@@ -34,8 +34,8 @@ hr {
     display: none;
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    right: 15%;
+    transform: translateY(-50%);
     background-color: #333;
     padding: 30px 40px;
     border-radius: 12px;
@@ -70,11 +70,11 @@ hr {
 @keyframes fadeInScale {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: translateY(-50%) scale(0.8);
     }
     100% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translateY(-50%) scale(1);
     }
 }
 
