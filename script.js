@@ -8,12 +8,19 @@ window.onload = function() {
 }
 
 function setGame() {
-    board = [
+    // board = [
+    //     [2,4,8,16],
+    //     [32,64,128,256],
+    //     [512,1024,2048,4096],
+    //     [8192,0,0,0]
+    // ]
+    board =[
         [0,0,0,0],
         [0,0,0,0],
         [0,0,0,0],
         [0,0,0,0]
-    ]
+    ];
+
     for (let r=0; r<rows; r++) {
         for (let c=0; c<columns; c++) {
             //<div id="0-0"><div>
@@ -65,6 +72,7 @@ function updateTile(tile, num) {
     tile.innerText = ""; //clear text
     tile.classList.value = ""; //clear the classList
     tile.classList.add("tile");
+
     if (num>0) {
         tile.innerText = num;
         if (num<=4096) {
@@ -75,25 +83,50 @@ function updateTile(tile, num) {
     }
 }
 
+function canMerge() {
+    for (let r=0; r<rows; r++) {
+        for (let c=0; c<columns; c++) {
+            let current = board[r][c];
+            if (c<columns-1 && board[r][c+1]==current) return true;
+            if (r<rows-1 && board[r+1][c]==current) return true;
+        }
+    }
+    return false;
+}
+
+function checkGameOver() {
+    if (!hasEmptyTile() && !canMerge()) {
+        showGameOver();
+    }
+}
+
+function showGameOver() {
+    document.getElementById("game-over").style.display = "block";
+}
+
 document.addEventListener("keyup", (e) => {
     if (e.code == "ArrowLeft") {
         slideLeft();
         setTwo();
+        checkGameOver();
     }
     else if (e.code == "ArrowRight") {
         slideRight();
         setTwo();
+        checkGameOver();
     }
     else if (e.code == "ArrowUp") {
         slideUp();
         setTwo();
+        checkGameOver();
     }
     else if (e.code == "ArrowDown") {
         slideDown();
         setTwo();
+        checkGameOver();
     }
     document.getElementById("score").innerText = score;
-})
+});
 
 function filterZero(row) {
     return row.filter(num => num!=0) //create a new array without zeroes
@@ -191,4 +224,30 @@ function slideDown() {
             updateTile(tile, num);
         }
     }
+}
+
+function restartGame() {
+    score = 0;
+    document.getElementById("score").innerText = score;
+
+    board =[
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0]
+    ];
+
+    //clear board visually
+    for (let r=0; r<rows; r++) {
+        for (let c=0; c<columns; c++) {
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            updateTile(tile, 0);
+        }
+    }
+    
+    //hide the popup
+    document.getElementById("game-over").style.display = "none";
+
+    setTwo();
+    setTwo();
 }
