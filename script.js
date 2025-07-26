@@ -37,6 +37,12 @@ function setGame() {
 
     setTwo();
     setTwo();
+
+    document.getElementById("playerName").addEventListener("keydown", function(event) {
+        if (event.key == "Enter") {
+            this.blur(); //removes the focus from input box
+        }
+    });
 }
 
 function hasEmptyTile() {
@@ -97,17 +103,6 @@ function canMerge() {
     return false;
 }
 
-function checkGameOver() {
-    if (!hasEmptyTile() && !canMerge()) {
-        showGameOver();
-    }
-}
-
-function showGameOver() {
-    //make the popup visible
-    document.getElementById("game-over").style.display = "block";
-}
-
 document.addEventListener("keyup", (e) => {
     if (e.code == "ArrowLeft") {
         slideLeft();
@@ -136,12 +131,6 @@ document.addEventListener("keyup", (e) => {
     }
     document.getElementById("highscore").innerText = highscore;
 });
-
-function resetHighScore() {
-    localStorage.removeItem("highscore");
-    highscore = 0;
-    document.getElementById("highscore").innerText = highscore;
-}
 
 function filterZero(row) {
     return row.filter(num => num!=0) //create a new array without zeroes
@@ -243,14 +232,25 @@ function slideDown() {
 
 function updateLeaderBoard() {
     const name = document.getElementById("playerName").value || "Player";
-    const entry = `${name} - ${score}`;
+    const entry = `${name} - ${score}`; //changes the input to string name - score
     const li = document.createElement("li");
     li.innerText = entry;
     document.getElementById("leaderboardList").appendChild(li);
 }
 
-function restartGame() {
+function showGameOver() {
+    //make the popup visible
+    document.getElementById("game-over").style.display = "block";
     updateLeaderBoard();
+}
+
+function checkGameOver() {
+    if (!hasEmptyTile() && !canMerge()) {
+        showGameOver();
+    }
+}
+
+function restartGame() {
     score = 0;
     document.getElementById("score").innerText = score;
 
@@ -271,8 +271,14 @@ function restartGame() {
     
     //hide the popup
     document.getElementById("game-over").style.display = "none";
-    document.getElementById("playerName").value = "";
+    document.getElementById("playerName").value = ""; //clears the input box
 
     setTwo();
     setTwo();
+}
+
+function resetHighScore() {
+    localStorage.removeItem("highscore");
+    highscore = 0;
+    document.getElementById("highscore").innerText = highscore;
 }
