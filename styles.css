@@ -8,6 +8,18 @@ hr {
     width: 500px;
 }
 
+.game-container {
+    position: relative;
+    display: flex;
+}
+
+.board-center-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+}
+
 #board {
     width: 400px;
     height: 400px;
@@ -31,10 +43,11 @@ hr {
 }
 
 #game-over {
+    /* invisible in the start */
     display: none;
     position: absolute;
     top: 50%;
-    right: 15%;
+    right: 12%;
     transform: translateY(-50%);
     background-color: #333;
     padding: 30px 40px;
@@ -67,10 +80,95 @@ hr {
     background-color: #ffb74d;
 }
 
+#game-over button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ffcc80;
+    border: none;
+    border-radius: 8 px;
+    /* changes the cursor to hand pointer */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#game-over button:hover {
+    background-color: #ffb74d;
+}
+
+#playerName {
+    color: black;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#playerName:focus {
+    border-color: #888;
+}
+
+.leaderboard-container {
+    margin-top: 20px;
+    margin-left: 70px;
+    background-color: #403f3e;
+    color: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.leaderboard h3 {
+    margin: 0 0 10px 0;
+    color: #f8f9fa;
+    font-size: 20px;
+}
+
+#leaderboardList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#leaderboardList li {
+    background-color: #ffffff;
+    color: black;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+}
+
+#reset-highscore-btn {
+    bottom: 20px;
+    right: 20px;
+    position: fixed;
+    padding: 10px 15px;
+    color: white;
+    background-color: #f44336;
+    border: none;
+    border-radius: 8 px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#reset-highscore-btn:hover {
+    background-color: #d32f2f;
+}
+
 @keyframes fadeInScale {
     0% {
         opacity: 0;
-        transform: translateY(-50%) scale(0.8);
+        transform: translateY(-50%) scale(0.5);
     }
     100% {
         opacity: 1;
@@ -105,7 +203,7 @@ hr {
 
 .x64 {
     background-color: #6d597a;
-    color: white;
+    color: #f8f9fa;
 }
 
 .x128 {
