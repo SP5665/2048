@@ -1,7 +1,10 @@
 var board;
 var score = 0;
+var highscore = localStorage.getItem("highscore") || 0;
 var rows = 4;
 var columns = 4;
+
+document.getElementById("highscore").innerText = highscore;
 
 window.onload = function() {
     setGame();
@@ -13,7 +16,7 @@ function setGame() {
     //     [32,64,128,256],
     //     [512,1024,2048,4096],
     //     [8192,0,0,0]
-    // ]
+    // ];
     board =[
         [0,0,0,0],
         [0,0,0,0],
@@ -101,6 +104,7 @@ function checkGameOver() {
 }
 
 function showGameOver() {
+    //make the popup visible
     document.getElementById("game-over").style.display = "block";
 }
 
@@ -126,7 +130,18 @@ document.addEventListener("keyup", (e) => {
         checkGameOver();
     }
     document.getElementById("score").innerText = score;
+    if (score>highscore) {
+        highscore = score;
+        localStorage.setItem("highscore", highscore);
+    }
+    document.getElementById("highscore").innerText = highscore;
 });
+
+function resetHighScore() {
+    localStorage.removeItem("highscore");
+    highscore = 0;
+    document.getElementById("highscore").innerText = highscore;
+}
 
 function filterZero(row) {
     return row.filter(num => num!=0) //create a new array without zeroes
@@ -226,7 +241,16 @@ function slideDown() {
     }
 }
 
+function updateLeaderBoard() {
+    const name = document.getElementById("playerName").value || "Player";
+    const entry = `${name} - ${score}`;
+    const li = document.createElement("li");
+    li.innerText = entry;
+    document.getElementById("leaderboardList").appendChild(li);
+}
+
 function restartGame() {
+    updateLeaderBoard();
     score = 0;
     document.getElementById("score").innerText = score;
 
@@ -247,6 +271,7 @@ function restartGame() {
     
     //hide the popup
     document.getElementById("game-over").style.display = "none";
+    document.getElementById("playerName").value = "";
 
     setTwo();
     setTwo();
