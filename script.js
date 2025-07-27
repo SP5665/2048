@@ -40,10 +40,24 @@ function setGame() {
 
     document.getElementById("playerName").addEventListener("keydown", function(event) {
         if (event.key == "Enter") {
-            this.blur(); //removes the focus from input box
+            this.blur(); //removes the focus and cursor from input box
         }
     });
 }
+
+function playSound(id) {
+    const sound = document.getElementById(id);
+    sound.currentTime = 0; //rewind to start
+    sound.play();
+}
+
+let isMuted = false;
+
+const muteBtn = document.getElementById("muteBtn");
+muteBtn.addEventListener("click", () => {
+    isMuted = !isMuted;
+    muteBtn.textContent = isMuted? "🔇" : "🔊"; //toggle icon
+})
 
 function hasEmptyTile() {
     for (let r=0; r<rows; r++) {
@@ -103,24 +117,38 @@ function canMerge() {
     return false;
 }
 
+let hasBrokenHighScore = false;
+
 document.addEventListener("keyup", (e) => {
     if (e.code == "ArrowLeft") {
         slideLeft();
+        if (!isMuted) {
+            playSound("moveSound");
+        }
         setTwo();
         checkGameOver();
     }
     else if (e.code == "ArrowRight") {
         slideRight();
+        if (!isMuted) {
+            playSound("moveSound");
+        }
         setTwo();
         checkGameOver();
     }
     else if (e.code == "ArrowUp") {
         slideUp();
+        if (!isMuted) {
+            playSound("moveSound");
+        }
         setTwo();
         checkGameOver();
     }
     else if (e.code == "ArrowDown") {
         slideDown();
+        if (!isMuted) {
+            playSound("moveSound");
+        }
         setTwo();
         checkGameOver();
     }
@@ -128,6 +156,13 @@ document.addEventListener("keyup", (e) => {
     if (score>highscore) {
         highscore = score;
         localStorage.setItem("highscore", highscore);
+        if (!hasBrokenHighScore) {
+            if (!isMuted) {
+            playSound("highScoreSound");
+        }
+            showHSPopup();
+            hasBrokenHighScore = true;
+        }
     }
     document.getElementById("highscore").innerText = highscore;
 });
@@ -146,6 +181,9 @@ function slide(row) {
             row[i]*=2;
             row[i+1]=0;
             score+=row[i];
+            if (!isMuted) {
+            playSound("mergeSound");
+        }
         } //[0,2,2,2] -> [4,0,2]
     }
     row = filterZero(row); //[4,2]
@@ -232,25 +270,31 @@ function slideDown() {
 
 function updateLeaderBoard() {
     const name = document.getElementById("playerName").value || "Player";
-    const entry = `${name} - ${score}`; //changes the input to string name - score
+    const entry = `${name} - ${score}`; //changes the input to string -> name - score
     const li = document.createElement("li");
     li.innerText = entry;
     document.getElementById("leaderboardList").appendChild(li);
 }
 
 function showGameOver() {
-    //make the popup visible
-    document.getElementById("game-over").style.display = "block";
-    updateLeaderBoard();
+    document.getElementById("game-over").style.display = "block"; //make the popup visible
 }
 
 function checkGameOver() {
     if (!hasEmptyTile() && !canMerge()) {
+        if (!isMuted) {
+            playSound("gameOverSound");
+        }
         showGameOver();
     }
 }
 
 function restartGame() {
+    if (!isMuted) {
+            playSound("clickSound");
+        }
+    updateLeaderBoard();
+    hasBrokenHighScore = false;
     score = 0;
     document.getElementById("score").innerText = score;
 
@@ -269,16 +313,32 @@ function restartGame() {
         }
     }
     
-    //hide the popup
-    document.getElementById("game-over").style.display = "none";
+    document.getElementById("game-over").style.display = "none"; //hides the popup
     document.getElementById("playerName").value = ""; //clears the input box
 
     setTwo();
     setTwo();
 }
 
+function showHSPopup() {
+    const popup = document.getElementById("newHSPopup");
+    popup.style.display = "block";
+    popup.style.opacity = 1;
+
+    //restart animation by resetting it
+    popup.style.animation = "none";
+    popup.offsetHeight; //trigger overflow (offsetHeight -> margin, padding, border etc)
+    popup.style.animation = "fadeOut 5s forwards"
+}
+
 function resetHighScore() {
-    localStorage.removeItem("highscore");
-    highscore = 0;
-    document.getElementById("highscore").innerText = highscore;
+    if (!isMuted) {
+            playSound("clickSound");
+        }
+    let confirmed = confirm("Are you sure you want to reset the high score?"); //built-in function
+    if (confirmed) {
+        localStorage.removeItem("highscore");
+        highscore = 0;
+        document.getElementById("highscore").innerText = highscore;
+    }
 }
