@@ -42,6 +42,29 @@ hr {
     transition: transform 0.2s ease-in, background-color 0.2s ease-in;
 }
 
+#newHSPopup {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background-color: #ff6f61;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: none;
+    margin-right: 100px;
+    z-index: 999;
+    animation: fadeOut 5s forwards;
+}
+
+@keyframes fadeOut {
+    0% {opacity: 1;}
+    60% {opacity: 1;}
+    100% {opacity: 0; display: none;}
+}
+
 #game-over {
     /* invisible in the start */
     display: none;
@@ -113,6 +136,8 @@ hr {
 }
 
 .leaderboard-container {
+    max-height: 300px;
+    overflow-y: auto;
     margin-top: 20px;
     margin-left: 70px;
     background-color: #403f3e;
@@ -174,6 +199,22 @@ hr {
         opacity: 1;
         transform: translateY(-50%) scale(1);
     }
+}
+
+#muteBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgb(99, 91, 91);
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 1000;
+    color: #333;
+}
+
+#muteBtn:hover {
+    transform: scale(1.1);
 }
 
 .x2 {
