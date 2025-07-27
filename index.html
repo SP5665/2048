@@ -9,6 +9,7 @@
 <body>
     <h1>2048 Game</h1>
     <hr>
+
     <div>
         <h2>High Score: <span id="highscore">0</span></h2>
         <h2>Score: <span id="score">0</span></h2>
@@ -34,7 +35,16 @@
         <button onclick="restartGame()">Try Again</button>
     </div>
 
+    <audio id="moveSound" src="sounds/move.mp3"></audio>
+    <audio id="mergeSound" src="sounds/merge.wav"></audio>
+    <audio id="highScoreSound" src="sounds/high score.wav"></audio>
+    <audio id="gameOverSound" src="sounds/game over.wav"></audio>
+    <audio id="clickSound" src="sounds/click.wav"></audio>
+
     <button id="reset-highscore-btn" onclick="resetHighScore()">Reset High Score</button>
+    <div id="newHSPopup">🎉 New High Score!</div>
+    <button id="muteBtn" title="Toggle Sound">🔊</button>
+
     <script src="script.js" charset="UTF-8"></script>
 </body>
 </html>
