@@ -37,13 +37,13 @@ function setGame() {
 
     setTwo();
     setTwo();
-
-    document.getElementById("playerName").addEventListener("keydown", function(event) {
-        if (event.key == "Enter") {
-            this.blur(); //removes the focus and cursor from input box
-        }
-    });
 }
+
+document.getElementById("playerName").addEventListener("keydown", function(event) {
+    if (event.key == "Enter") {
+        this.blur(); //removes the focus and cursor from input box
+    }
+});
 
 function playSound(id) {
     const sound = document.getElementById(id);
@@ -57,7 +57,16 @@ const muteBtn = document.getElementById("muteBtn");
 muteBtn.addEventListener("click", () => {
     isMuted = !isMuted;
     muteBtn.textContent = isMuted? "🔇" : "🔊"; //toggle icon
-})
+});
+
+document.getElementById("rules-btn").addEventListener("click", () => {
+    playSound("clickSound");
+    if (document.getElementById("rules-popup").style.display === "block") {
+        document.getElementById("rules-popup").style.display = "none";
+    } else {
+        document.getElementById("rules-popup").style.display = "block";
+    }
+});
 
 function hasEmptyTile() {
     for (let r=0; r<rows; r++) {
@@ -117,7 +126,16 @@ function canMerge() {
     return false;
 }
 
+function launchConfetti() {
+    confetti({              //from Canvas Confetti library from the link
+        particleCount: 150,
+        spread: 150,
+        origin: {y: 0.6} //starting position 0.5 being the center
+    });
+}
+
 let hasBrokenHighScore = false;
+let confettiShown = false;
 
 document.addEventListener("keyup", (e) => {
     if (e.code == "ArrowLeft") {
@@ -162,6 +180,10 @@ document.addEventListener("keyup", (e) => {
         }
             showHSPopup();
             hasBrokenHighScore = true;
+        }
+        if (!confettiShown) {
+            launchConfetti();
+            confettiShown = true;
         }
     }
     document.getElementById("highscore").innerText = highscore;
@@ -276,6 +298,17 @@ function updateLeaderBoard() {
     document.getElementById("leaderboardList").appendChild(li);
 }
 
+function showHSPopup() {
+    const popup = document.getElementById("newHSPopup");
+    popup.style.display = "block";
+    popup.style.opacity = 1;
+
+    //restart animation by resetting it
+    popup.style.animation = "none";
+    popup.offsetHeight; //trigger overflow (offsetHeight -> margin, padding, border etc)
+    popup.style.animation = "fadeOut 5s forwards"
+}
+
 function showGameOver() {
     document.getElementById("game-over").style.display = "block"; //make the popup visible
 }
@@ -295,6 +328,7 @@ function restartGame() {
         }
     updateLeaderBoard();
     hasBrokenHighScore = false;
+    confettiShown = false;
     score = 0;
     document.getElementById("score").innerText = score;
 
@@ -318,17 +352,6 @@ function restartGame() {
 
     setTwo();
     setTwo();
-}
-
-function showHSPopup() {
-    const popup = document.getElementById("newHSPopup");
-    popup.style.display = "block";
-    popup.style.opacity = 1;
-
-    //restart animation by resetting it
-    popup.style.animation = "none";
-    popup.offsetHeight; //trigger overflow (offsetHeight -> margin, padding, border etc)
-    popup.style.animation = "fadeOut 5s forwards"
 }
 
 function resetHighScore() {
