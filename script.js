@@ -60,7 +60,9 @@ muteBtn.addEventListener("click", () => {
 });
 
 document.getElementById("rules-btn").addEventListener("click", () => {
-    playSound("clickSound");
+    if (!isMuted) {
+        playSound("clickSound");
+    }
     if (document.getElementById("rules-popup").style.display === "block") {
         document.getElementById("rules-popup").style.display = "none";
     } else {
@@ -365,3 +367,59 @@ function resetHighScore() {
         document.getElementById("highscore").innerText = highscore;
     }
 }
+
+// 👇 Touch support for mobile devices
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener("touchstart", function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener("touchend", function(e) {
+    let touchEndX = e.changedTouches[0].clientX;
+    let touchEndY = e.changedTouches[0].clientY;
+
+    let dx = touchEndX - touchStartX;
+    let dy = touchEndY - touchStartY;
+
+    // Determine swipe direction
+    if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 30) {
+            slideRight();
+        } else if (dx < -30) {
+            slideLeft();
+        }
+    } else {
+        if (dy > 30) {
+            slideDown();
+        } else if (dy < -30) {
+            slideUp();
+        }
+    }
+
+    // After swipe:
+    if (!isMuted) {
+        playSound("moveSound");
+    }
+    setTwo();
+    checkGameOver();
+    document.getElementById("score").innerText = score;
+
+    if (score > highscore) {
+        highscore = score;
+        localStorage.setItem("highscore", highscore);
+        if (!hasBrokenHighScore) {
+            if (!isMuted) playSound("highScoreSound");
+            showHSPopup();
+            hasBrokenHighScore = true;
+        }
+        if (!confettiShown) {
+            launchConfetti();
+            confettiShown = true;
+        }
+    }
+
+    document.getElementById("highscore").innerText = highscore;
+}, { passive: true });
