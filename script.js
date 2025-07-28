@@ -1,7 +1,3 @@
-function boardChanged(before, after) { //for touch screen
-    return JSON.stringify(before) !== JSON.stringify(after);
-}
-
 var board;
 var score = 0;
 var highscore = localStorage.getItem("highscore") || 0;
@@ -373,6 +369,10 @@ function resetHighScore() {
 }
 
 // 👇 Touch support for mobile devices
+function boardChanged(before, after) { //for touch screen
+    return JSON.stringify(before) !== JSON.stringify(after);
+}
+
 function moveLeft() {
     const prev = board.map(row => row.slice()); // deep copy
 
