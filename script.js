@@ -441,7 +441,7 @@ function updateHighScore() {
     }
 }
 
-const boardElement = document.getElementById("board");
+
 let startX, startY;
 const swipeThreshold = 30; // The threshold (30px) avoids registering small accidental swipes
 
@@ -449,7 +449,7 @@ document.addEventListener("touchstart", function (e) {
     // When the player touches the screen, record the initial X and Y positions
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
-}, { passive: true }); // allow scroll outside board
+});
 
 document.addEventListener("touchend", function (e) {
     // When the finger is lifted, get the end point
