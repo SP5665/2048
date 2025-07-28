@@ -369,57 +369,31 @@ function resetHighScore() {
 }
 
 // 👇 Touch support for mobile devices
-let touchStartX = 0;
-let touchStartY = 0;
+let startX, startY;
+const swipeThreshold = 30; // You can tweak this number
 
-document.addEventListener("touchstart", function(e) {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-}, { passive: true });
+document.addEventListener("touchstart", function (e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+});
 
-document.addEventListener("touchend", function(e) {
-    let touchEndX = e.changedTouches[0].clientX;
-    let touchEndY = e.changedTouches[0].clientY;
+document.addEventListener("touchend", function (e) {
+    let endX = e.changedTouches[0].clientX;
+    let endY = e.changedTouches[0].clientY;
 
-    let dx = touchEndX - touchStartX;
-    let dy = touchEndY - touchStartY;
+    let deltaX = endX - startX;
+    let deltaY = endY - startY;
 
-    // Determine swipe direction
-    if (Math.abs(dx) > Math.abs(dy)) {
-        if (dx > 30) {
-            slideRight();
-        } else if (dx < -30) {
-            slideLeft();
-        }
+    if (Math.abs(deltaX) < swipeThreshold && Math.abs(deltaY) < swipeThreshold) {
+        // 👇 Ignore small touches
+        return;
+    }
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) moveRight();
+        else moveLeft();
     } else {
-        if (dy > 30) {
-            slideDown();
-        } else if (dy < -30) {
-            slideUp();
-        }
+        if (deltaY > 0) moveDown();
+        else moveUp();
     }
-
-    // After swipe:
-    if (!isMuted) {
-        playSound("moveSound");
-    }
-    setTwo();
-    checkGameOver();
-    document.getElementById("score").innerText = score;
-
-    if (score > highscore) {
-        highscore = score;
-        localStorage.setItem("highscore", highscore);
-        if (!hasBrokenHighScore) {
-            if (!isMuted) playSound("highScoreSound");
-            showHSPopup();
-            hasBrokenHighScore = true;
-        }
-        if (!confettiShown) {
-            launchConfetti();
-            confettiShown = true;
-        }
-    }
-
-    document.getElementById("highscore").innerText = highscore;
-}, { passive: true });
+});
