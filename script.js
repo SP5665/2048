@@ -1,3 +1,7 @@
+function boardChanged(before, after) { //for touch screen
+    return JSON.stringify(before) !== JSON.stringify(after);
+}
+
 var board;
 var score = 0;
 var highscore = localStorage.getItem("highscore") || 0;
@@ -369,6 +373,75 @@ function resetHighScore() {
 }
 
 // 👇 Touch support for mobile devices
+function moveLeft() {
+    const prev = board.map(row => row.slice()); // deep copy
+
+    slideLeft();
+
+    if (boardChanged(prev, board)) {
+        if (!isMuted) playSound("moveSound");
+        setTwo();
+        checkGameOver();
+        document.getElementById("score").innerText = score;
+        updateHighScore();
+    }
+}
+
+function moveRight() {
+    const prev = board.map(row => row.slice());
+    slideRight();
+    if (boardChanged(prev, board)) {
+        if (!isMuted) playSound("moveSound");
+        setTwo();
+        checkGameOver();
+        document.getElementById("score").innerText = score;
+        updateHighScore();
+    }
+}
+
+function moveUp() {
+    const prev = board.map(row => row.slice());
+    slideUp();
+    if (boardChanged(prev, board)) {
+        if (!isMuted) playSound("moveSound");
+        setTwo();
+        checkGameOver();
+        document.getElementById("score").innerText = score;
+        updateHighScore();
+    }
+}
+
+function moveDown() {
+    const prev = board.map(row => row.slice());
+    slideDown();
+    if (boardChanged(prev, board)) {
+        if (!isMuted) playSound("moveSound");
+        setTwo();
+        checkGameOver();
+        document.getElementById("score").innerText = score;
+        updateHighScore();
+    }
+}
+
+function updateHighScore() {
+    if (score > highscore) {
+        highscore = score;
+        localStorage.setItem("highscore", highscore);
+        document.getElementById("highscore").innerText = highscore;
+
+        if (!hasBrokenHighScore) {
+            if (!isMuted) playSound("highScoreSound");
+            showHSPopup();
+            hasBrokenHighScore = true;
+        }
+        if (!confettiShown) {
+            launchConfetti();
+            confettiShown = true;
+        }
+    }
+}
+
+
 let startX, startY;
 const swipeThreshold = 30; // You can tweak this number
 
