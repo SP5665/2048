@@ -370,7 +370,7 @@ function resetHighScore() {
 
 // 👇 Touch support for mobile devices
 function boardChanged(before, after) { // checks if the game board has changed after a move
-    return JSON.stringify(before) !== JSON.stringify(after); // turns the 2D arrays into strings so they can be compared.
+    return JSON.stringify(before) !== JSON.stringify(after); // turns the 2D arrays into strings so they can be compared
 }
 
 function moveLeft() {
@@ -423,20 +423,39 @@ function moveDown() {
     }
 }
 
+function updateHighScore() {
+    if (score > highscore) {
+        highscore = score;
+        localStorage.setItem("highscore", highscore);
+        document.getElementById("highscore").innerText = highscore;
+
+        if (!hasBrokenHighScore) {
+            if (!isMuted) playSound("highScoreSound");
+            showHSPopup();
+            hasBrokenHighScore = true;
+        }
+        if (!confettiShown) {
+            launchConfetti();
+            confettiShown = true;
+        }
+    }
+}
+
+
 let startX, startY;
 const swipeThreshold = 30; // The threshold (30px) avoids registering small accidental swipes
 
 document.addEventListener("touchstart", function (e) {
-    // When the player touches the screen, record the initial X and Y positions.
+    // When the player touches the screen, record the initial X and Y positions
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
 });
 
 document.addEventListener("touchend", function (e) {
-    // When the finger is lifted, get the end point.
+    // When the finger is lifted, get the end point
     let endX = e.changedTouches[0].clientX;
     let endY = e.changedTouches[0].clientY;
-    // Calculate the swipe direction (difference in X and Y).
+    // Calculate the swipe direction (difference in X and Y)
     let deltaX = endX - startX;
     let deltaY = endY - startY;
 
@@ -445,7 +464,7 @@ document.addEventListener("touchend", function (e) {
     }
 
     // If it’s mostly horizontal — call moveLeft() or moveRight().
-    // If mostly vertical — call moveUp() or moveDown().
+    // If mostly vertical — call moveUp() or moveDown()
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0) moveRight();
         else moveLeft();
