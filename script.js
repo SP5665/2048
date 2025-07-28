@@ -51,6 +51,17 @@ function playSound(id) {
     sound.play();
 }
 
+function unlockAudio() { //so that the sound plays on the mobile version as they require user interaction
+    const dummy = new Audio();
+    dummy.muted = true;
+    dummy.play().catch(() => {});
+    document.removeEventListener("click", unlockAudio);
+    document.removeEventListener("touchstart", unlockAudio);
+}
+
+document.addEventListener("click", unlockAudio);
+document.addEventListener("touchstart", unlockAudio);
+
 document.addEventListener("click", unlockAudio);
 document.addEventListener("touchstart", unlockAudio);
 
