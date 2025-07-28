@@ -441,30 +441,27 @@ function updateHighScore() {
     }
 }
 
+const boardElement = document.getElementById("board"); // or whatever your board ID is
 
 let startX, startY;
-const swipeThreshold = 30; // The threshold (30px) avoids registering small accidental swipes
+const swipeThreshold = 30;
 
-document.addEventListener("touchstart", function (e) {
-    // When the player touches the screen, record the initial X and Y positions
+boardElement.addEventListener("touchstart", function (e) {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
-});
+}, { passive: true }); // allow scroll outside board
 
-document.addEventListener("touchend", function (e) {
-    // When the finger is lifted, get the end point
+boardElement.addEventListener("touchend", function (e) {
     let endX = e.changedTouches[0].clientX;
     let endY = e.changedTouches[0].clientY;
-    // Calculate the swipe direction (difference in X and Y)
+
     let deltaX = endX - startX;
     let deltaY = endY - startY;
 
     if (Math.abs(deltaX) < swipeThreshold && Math.abs(deltaY) < swipeThreshold) {
-        return; // small movements are ignored
+        return; // ignore tap
     }
 
-    // If it’s mostly horizontal — call moveLeft() or moveRight().
-    // If mostly vertical — call moveUp() or moveDown()
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0) moveRight();
         else moveLeft();
@@ -473,3 +470,35 @@ document.addEventListener("touchend", function (e) {
         else moveUp();
     }
 });
+
+// let startX, startY;
+// const swipeThreshold = 30; // The threshold (30px) avoids registering small accidental swipes
+
+// document.addEventListener("touchstart", function (e) {
+//     // When the player touches the screen, record the initial X and Y positions
+//     startX = e.touches[0].clientX;
+//     startY = e.touches[0].clientY;
+// });
+
+// document.addEventListener("touchend", function (e) {
+//     // When the finger is lifted, get the end point
+//     let endX = e.changedTouches[0].clientX;
+//     let endY = e.changedTouches[0].clientY;
+//     // Calculate the swipe direction (difference in X and Y)
+//     let deltaX = endX - startX;
+//     let deltaY = endY - startY;
+
+//     if (Math.abs(deltaX) < swipeThreshold && Math.abs(deltaY) < swipeThreshold) {
+//         return; // small movements are ignored
+//     }
+
+//     // If it’s mostly horizontal — call moveLeft() or moveRight().
+//     // If mostly vertical — call moveUp() or moveDown()
+//     if (Math.abs(deltaX) > Math.abs(deltaY)) {
+//         if (deltaX > 0) moveRight();
+//         else moveLeft();
+//     } else {
+//         if (deltaY > 0) moveDown();
+//         else moveUp();
+//     }
+// });
