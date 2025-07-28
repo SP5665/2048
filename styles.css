@@ -42,6 +42,56 @@ hr {
     transition: transform 0.2s ease-in, background-color 0.2s ease-in;
 }
 
+#rules-popup {
+    display: none;
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background: #fff;
+    border: 2px solid #ccc;
+    padding: 20px;
+    z-index: 999;
+    max-width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#rules-popup ul {
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+#rules-popup li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.rules-content h3 {
+    margin-top: 0;
+}
+
+#rules-btn {
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    padding: 8px 14px;
+    font-size: 16px;
+    background-color: #ffc107;
+    color: #333;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#rules-btn:hover {
+    background-color: #ffb300;
+    transform: scale(1.05);
+}
+
 #newHSPopup {
     position: fixed;
     top: 100px;
